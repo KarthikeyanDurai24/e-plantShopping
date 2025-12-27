@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addItem } from "../redux/CartSlice"; // Make sure this path matches your project structure
-import "./ProductList.css"; // Optional: For styling product-grid
+import { addItem } from "../redux/CartSlice"; // Adjust path as per your project
+import "./ProductList.css"; // Optional: for styling
 
+// Array of plant objects
 const plantsArray = [
   {
     name: "Aloe Vera",
@@ -25,20 +26,28 @@ const plantsArray = [
     description: "Repels insects naturally and can be used in cooking.",
     cost: 8,
   },
-  // Add more plant objects here
+  {
+    name: "Lavender",
+    category: "Medicinal",
+    image: "https://example.com/lavender.jpg",
+    description: "Calming fragrance and has medicinal properties.",
+    cost: 12,
+  },
+  // Add more plants here as needed
 ];
 
 const ProductList = () => {
   const dispatch = useDispatch();
 
-  // State to track which items are added to cart
+  // State to track which plants are added to cart
   const [addedToCart, setAddedToCart] = useState({});
 
+  // Function to handle adding plant to cart
   const handleAddToCart = (plant) => {
-    // Dispatch plant to global Redux store
+    // Dispatch the plant object to the global cart using Redux
     dispatch(addItem(plant));
 
-    // Update local state to reflect that this plant was added
+    // Update local state to reflect product is added
     setAddedToCart((prevState) => ({
       ...prevState,
       [plant.name]: true,
