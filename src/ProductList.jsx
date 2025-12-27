@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react'; 
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../redux/CartSlice'; // Adjust path if needed
 import './ProductList.css';
 import CartItem from './CartItem';
@@ -10,6 +10,10 @@ function ProductList({ onHomeClick }) {
     const [addedToCart, setAddedToCart] = useState({}); // Track which products are added
 
     const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cart.items);
+
+    // Calculate total quantity for cart icon
+    const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const plantsArray = [
         // Your existing plantsArray here
@@ -47,7 +51,7 @@ function ProductList({ onHomeClick }) {
             {/* Navbar */}
             <div className="navbar">
                 <div className="luxury">
-                    <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
+                    <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="Logo" />
                     <a href="/" onClick={handleHomeClick} className="tag_home_link">
                         <h3>Paradise Nursery</h3>
                         <i>Where Green Meets Serenity</i>
@@ -59,7 +63,11 @@ function ProductList({ onHomeClick }) {
                     </div>
                     <div>
                         <a href="#" onClick={handleCartClick}>
-                            <h1 className='cart'>🛒</h1>
+                            <h1 className='cart'>🛒
+                                {totalCartQuantity > 0 && (
+                                    <span className="cart_quantity_count">{totalCartQuantity}</span>
+                                )}
+                            </h1>
                         </a>
                     </div>
                 </div>
